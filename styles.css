@@ -1,0 +1,229 @@
+/* ==========================================================================
+   ANAND SYSTEMS: DYNAMIC SPECIFICATION STYLESHEET (V5.1)
+   ========================================================================== */
+
+/* Theme variables setup */
+:root {
+  /* Default: Premium Dark Glassmorphic Theme */
+  --bg: #060e20;
+  --surface: rgba(45, 52, 73, 0.4);
+  --border: rgba(255, 255, 255, 0.05);
+  --text-primary: #dae2fd;
+  --text-secondary: #c2c6d6;
+  --text-muted: #8c909f;
+  --accent: #adc6ff;
+  --code-bg: rgba(23, 31, 51, 0.6);
+  --backdrop-blur: blur(12px);
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+html.light {
+  /* Premium Light Glassmorphic Theme */
+  --bg: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.7);
+  --border: rgba(15, 23, 42, 0.06);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent: #2563eb;
+  --code-bg: rgba(241, 245, 249, 0.8);
+  --backdrop-blur: blur(12px);
+  --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+body {
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(87, 27, 193, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(76, 215, 246, 0.12) 0%, transparent 40%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.light body {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Modern Card Styles with Glassmorphism */
+.dev-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  box-shadow: var(--card-shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.dev-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+html.light .dev-card:hover {
+  border-color: rgba(15, 23, 42, 0.15);
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* Profile photo framing */
+.profile-frame {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 30px rgba(173, 198, 255, 0.08);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.profile-frame:hover {
+  border-color: rgba(173, 198, 255, 0.35);
+  box-shadow: 0 0 40px rgba(173, 198, 255, 0.15);
+}
+
+html.light .profile-frame {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.01) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.05);
+}
+
+/* Timeline components */
+.timeline-track {
+  position: relative;
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
+}
+.timeline-node {
+  position: relative;
+  padding-bottom: 32px;
+}
+.timeline-node::before {
+  content: '';
+  position: absolute;
+  left: -29.5px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--bg);
+  border: 2px solid var(--border);
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.timeline-node:hover::before {
+  border-color: var(--text-primary);
+  background-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* CLI Interactive Terminal styling */
+.cli-terminal {
+  background-color: rgba(23, 31, 51, 0.7);
+  border: 1px solid var(--border);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+html.light .cli-terminal {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.cli-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 14px;
+  background-color: var(--text-primary);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+/* Raycast Command Palette Modal */
+.cmd-palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(6, 14, 32, 0.65);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cmd-palette-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.cmd-palette {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  width: 90%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.96) translateY(-10px);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cmd-palette-overlay.open .cmd-palette {
+  transform: scale(1) translateY(0);
+}
+
+/* Highlights */
+.glow-text {
+  text-shadow: 0 0 20px rgba(173, 198, 255, 0.35);
+}
+.text-accent {
+  color: var(--accent);
+}
+
+/* Contribution Chart integration overrides */
+.github-chart {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+}
+.github-chart img {
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.github-chart img:hover {
+  opacity: 1;
+}
+
+/* Make dark mode git chart look blue-neon matching theme variables */
+.github-chart img {
+  filter: invert(1) hue-rotate(190deg) brightness(1.2) contrast(1.1);
+  mix-blend-mode: screen;
+}
+
+html.light .github-chart img {
+  filter: invert(0) hue-rotate(0deg) brightness(1.0) contrast(1.0);
+  mix-blend-mode: multiply;
+}

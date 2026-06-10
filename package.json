@@ -1,0 +1,14 @@
+{
+  "name": "sirigiri-anand-kumar-portfolio",
+  "version": "4.0.2",
+  "description": "Breathtaking Awwwards-level futuristic portfolio OS for Sirigiri Anand Kumar",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 3000",
+    "dev": "http-server -p 3000"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
