@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Sirigiri Anand Kumar | Software Engineer</title>
+  <title>Sirigiri Anand Kumar | Portfolio</title>
   
-  <meta name="description" content="Sirigiri Anand Kumar - Software Engineer Portfolio. Data-driven engineering projects, GitHub metrics, interactive command shell, and command search palette.">
-  <meta name="keywords" content="Sirigiri Anand Kumar, Software Engineer, Reva University, GitHub API, Command Palette, Interactive Terminal">
+  <meta name="description" content="Sirigiri Anand Kumar - Software Engineer & Computer Science Student. Portfolio showcasing original projects, academic records, and real-time status updates.">
+  <meta name="keywords" content="Sirigiri Anand Kumar, Software Engineer, Reva University, Live Portfolio, Developer Portfolio, Hack2Skill, PromptWars, GSSoC">
   <meta name="author" content="Sirigiri Anand Kumar">
 
-  <!-- Google Fonts: Inter and Material Symbols Outlined -->
+  <!-- Google Fonts: Outfit, Inter, JetBrains Mono, and Material Symbols Outlined -->
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -22,458 +22,453 @@
         theme: {
             extend: {
                 colors: {
-                    zinc: {
-                        950: "#09090b",
-                        900: "#18181b",
-                        800: "#27272a",
-                        700: "#3f3f46",
-                        600: "#52525b",
-                        400: "#a1a1aa",
-                        300: "#d4d4d8",
-                        50: "#fafafa"
+                    indigo: {
+                        500: "#6366f1",
+                        600: "#4f46e5",
+                        700: "#4338ca",
+                        900: "#312e81"
+                    },
+                    slate: {
+                        950: "#090d16",
+                        900: "#0f172a",
+                        800: "#1e293b",
+                        400: "#94a3b8",
+                        50: "#f8fafc"
                     }
                 },
                 fontFamily: {
-                    sans: ["Inter", "sans-serif"]
+                    sans: ["Inter", "sans-serif"],
+                    display: ["Outfit", "sans-serif"],
+                    mono: ["JetBrains Mono", "monospace"]
                 }
             }
         }
     }
   </script>
-
-  <!-- CSS Link containing scrollbars, timelines, heatmaps overrides -->
+  
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="bg-[var(--bg)] text-[var(--text-primary)] transition-colors duration-300 font-sans antialiased overflow-x-hidden selection:bg-zinc-800 selection:text-white">
+<body class="bg-[var(--bg)] text-[var(--text-primary)] transition-colors duration-300 font-sans antialiased overflow-x-hidden selection:bg-indigo-900 selection:text-white">
 
   <!-- Systems Preloader -->
-  <div id="preloader" class="fixed inset-0 z-50 bg-zinc-950 flex flex-col justify-center items-center transition-opacity duration-500">
+  <div id="preloader" class="fixed inset-0 z-[2000] bg-zinc-950 flex flex-col justify-center items-center transition-opacity duration-500">
     <div class="space-y-4 text-center max-w-sm w-11/12">
-      <span class="text-[10px] font-bold text-zinc-400 tracking-[0.2em] uppercase font-mono">anand_systems --syncing</span>
-      <h2 id="preloader-typed-title" class="text-xl font-bold tracking-tight text-white font-mono">> Initializing command matrices...</h2>
+      <span class="text-[10px] font-bold text-zinc-400 tracking-[0.25em] uppercase font-mono">sirigiri_portfolio --syncing</span>
+      <h2 id="preloader-typed-title" class="text-xs font-mono text-zinc-300">> Retrieving records from sync nodes...</h2>
       <div class="w-full h-[1px] bg-zinc-900 overflow-hidden relative">
-        <div id="preloader-bar" class="absolute left-0 top-0 h-full bg-zinc-50 transition-all duration-100" style="width: 0%"></div>
+        <div id="preloader-bar" class="absolute left-0 top-0 h-full bg-[var(--accent)] transition-all duration-100" style="width: 0%"></div>
       </div>
     </div>
   </div>
 
   <!-- Command Palette Modal Overlay -->
   <div id="command-palette" class="cmd-palette-overlay">
-    <div class="cmd-palette dev-card overflow-hidden">
-      <!-- Search Input -->
-      <div class="flex items-center px-4 py-3 border-b border-[var(--border)] gap-3">
+    <div class="cmd-palette portfolio-card overflow-hidden">
+      <div class="flex items-center px-4 py-3.5 border-b border-[var(--border)] gap-3">
         <span class="material-symbols-outlined text-zinc-400 text-lg">search</span>
-        <input type="text" id="cmd-search-input" placeholder="Type a command or search sections..." class="bg-transparent border-none outline-none text-sm text-[var(--text-primary)] w-full focus:ring-0 p-0" autocomplete="off"/>
+        <input type="text" id="cmd-search-input" placeholder="Search sections or run a command..." class="bg-transparent border-none outline-none text-sm text-[var(--text-primary)] w-full focus:ring-0 p-0 font-sans" autocomplete="off"/>
         <span class="text-[10px] font-mono bg-zinc-900 border border-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded uppercase">ESC</span>
       </div>
-      <!-- Commands Results List -->
       <div id="cmd-list" class="max-h-80 overflow-y-auto p-2 space-y-1">
-        <!-- Dyn list will go here -->
+        <!-- Dyn list -->
       </div>
     </div>
   </div>
 
-  <!-- Sticky Header -->
+  <!-- Centered Edit Modal -->
+  <div id="edit-modal-overlay" class="edit-modal-overlay">
+    <div class="edit-modal-card">
+      <!-- Header -->
+      <div class="p-6 border-b border-[var(--border)] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[var(--accent)] text-lg">settings_suggest</span>
+          <span class="text-sm font-bold font-display tracking-wide uppercase">Workspace Editor</span>
+        </div>
+        <button id="edit-modal-close" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="flex-grow overflow-y-auto p-6 space-y-5">
+        <div class="space-y-2">
+          <label class="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider block">Activity Status Text</label>
+          <input type="text" id="admin-status-text" class="portfolio-input" placeholder="What are you currently coding or learning?">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider block">Indicator Dot</label>
+            <select id="admin-status-indicator" class="portfolio-input block">
+              <option value="online">Online (Green)</option>
+              <option value="busy">Busy Coding (Amber)</option>
+              <option value="offline">Away (Red)</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider block">Coffee Intake</label>
+            <input type="number" id="admin-coffee-count" class="portfolio-input" min="0" max="25">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider block">Commits Today</label>
+            <input type="number" id="admin-commits-today" class="portfolio-input" min="0">
+          </div>
+          <div>
+            <label class="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider block">Primary Target</label>
+            <input type="text" id="admin-current-focus" class="portfolio-input" placeholder="Current Learning Target">
+          </div>
+        </div>
+
+        <!-- Project Editor Nodes -->
+        <div class="space-y-3 pt-3 border-t border-[var(--border)]">
+          <label class="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider block">Currently Building Operations</label>
+          <div id="admin-projects-list" class="space-y-4 max-h-56 overflow-y-auto pr-1">
+            <!-- Dynamic Projects -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-6 border-t border-[var(--border)] bg-zinc-950/20 flex gap-3">
+        <button id="edit-modal-cancel" class="flex-1 bg-zinc-900 border border-[var(--border)] hover:bg-zinc-800 text-[var(--text-primary)] text-xs font-semibold py-2.5 rounded-xl transition-all active:scale-98">
+          Cancel
+        </button>
+        <button id="admin-save-btn" class="flex-1 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-white text-xs font-semibold py-2.5 rounded-xl hover:shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all active:scale-98">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
   <header class="fixed top-0 left-0 w-full z-40 bg-[var(--bg)]/80 backdrop-blur-md border-b border-[var(--border)]">
-    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-      <a href="#hero" class="text-sm font-bold tracking-tight text-[var(--text-primary)] hover:opacity-85 transition-opacity font-mono">
-        sirigiri_anand_kumar
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#about" class="text-base font-bold font-display tracking-tight text-[var(--text-primary)] flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-[var(--accent)] animate-pulse"></span>
+        <span>sirigiri.dev</span>
       </a>
-      <nav class="hidden md:flex items-center gap-6">
-        <a href="#projects" class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Projects</a>
-        <a href="#insights" class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Insights</a>
-        <a href="#experience" class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Experience</a>
-        <a href="#achievements" class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Achievements</a>
-        <a href="#contact" class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Contact</a>
+      
+      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase text-[var(--text-secondary)]">
+        <a href="#about" class="hover:text-[var(--text-primary)] transition-colors">/about</a>
+        <a href="#projects" class="hover:text-[var(--text-primary)] transition-colors">/projects</a>
+        <a href="#experience" class="hover:text-[var(--text-primary)] transition-colors">/chronology</a>
+        <a href="#contact" class="hover:text-[var(--text-primary)] transition-colors">/contact</a>
       </nav>
+
       <div class="flex items-center gap-4">
+        <!-- Edit Trigger -->
+        <button id="admin-panel-trigger" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] px-3 py-1.5 rounded-xl active:scale-95 transition-all flex items-center gap-1.5 text-xs font-semibold" title="Toggle Live Editor">
+          <span class="pulse-indicator online" id="header-status-indicator"></span>
+          <span>EDIT MODE</span>
+        </button>
+
         <!-- Raycast Palette Trigger -->
-        <button id="palette-trigger-btn" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1 text-xs font-mono bg-[var(--surface)] border border-[var(--border)] px-2.5 py-1.5 rounded-lg active:scale-95 transition-transform" title="Search commands (Ctrl+K)">
+        <button id="palette-trigger-btn" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1 text-xs font-mono bg-[var(--surface)] border border-[var(--border)] px-2.5 py-1.5 rounded-xl active:scale-95 transition-transform" title="Search commands (Ctrl+K)">
           <span class="material-symbols-outlined text-sm font-bold">keyboard_command_key</span>
           <span>K</span>
         </button>
-        <!-- Theme Toggle Switch -->
-        <button id="theme-toggle-btn" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center" title="Toggle Theme mode">
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center" title="Toggle Theme Mode">
           <span class="material-symbols-outlined text-lg">dark_mode</span>
         </button>
-        <!-- Git/LinkedIn -->
-        <a href="https://github.com/Anandsirigiri07" target="_blank" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-        </a>
       </div>
     </div>
   </header>
 
-  <!-- MAIN SCROLL CONTENT -->
-  <main class="max-w-6xl mx-auto px-6 pt-24 pb-32 space-y-24">
-
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-4xl mx-auto px-6 pt-28 pb-32 space-y-28">
+    
     <!-- HERO SECTION -->
-    <section id="hero" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center min-h-[60vh] py-8">
-      <div class="md:col-span-8 space-y-6 text-left">
-        <div class="inline-flex px-3 py-1 rounded-full bg-[var(--surface)] text-[var(--text-secondary)] text-xs font-semibold border border-[var(--border)] tracking-wider">
-          SOFTWARE ENGINEER IN PROGRESS
+    <section id="about" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-8">
+      <div class="md:col-span-8 space-y-6">
+        <div class="inline-flex px-3 py-1 rounded-full bg-[var(--surface)] border border-[var(--border)] text-indigo-400 text-[10px] font-bold font-mono tracking-wider uppercase">
+          Computer Science Undergraduate
         </div>
-        <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-[var(--text-primary)] leading-tight">
-          Sirigiri <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Anand</span> Kumar
+        
+        <h1 class="text-4xl md:text-5xl font-black font-display tracking-tight text-[var(--text-primary)] leading-tight">
+          Sirigiri <span class="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">Anand</span> Kumar
         </h1>
-        <p class="text-lg md:text-xl text-[var(--text-secondary)] font-medium leading-relaxed">
-          Computer Science Undergraduate @ Reva University
+        
+        <p class="text-base text-[var(--text-secondary)] leading-relaxed font-medium">
+          Studying Computer Science at REVA University. I specialize in Data Structures and Algorithms (DSA) in Java, AI-driven backend services, and computer vision engines. Active open-source collaborator at GirlScript Summer of Code (GSSoC).
         </p>
-        <p class="text-[var(--text-secondary)] text-base max-w-2xl leading-relaxed">
-          Focused on building robust backend services, AI-powered investigative crime analytics, and computer vision engines. Active open-source contributor at GSSoC, currently mastering Data Structures and Algorithms (DSA) in Java, and prioritizing clean data-driven systems.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <button id="hero-cmd-btn" class="bg-[var(--text-primary)] text-[var(--bg)] px-6 py-2.5 rounded-lg text-sm font-semibold hover:opacity-85 transition-all active:scale-95 flex items-center gap-2">
+
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href="#projects" class="bg-[var(--text-primary)] text-[var(--bg)] px-5 py-2.5 rounded-xl text-xs font-bold hover:opacity-90 transition-all active:scale-95 flex items-center gap-1">
+            <span>Explore Code</span>
+            <span class="material-symbols-outlined text-sm">arrow_downward</span>
+          </a>
+          <button id="hero-cmd-btn" class="bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-hover)] text-[var(--text-primary)] px-5 py-2.5 rounded-xl text-xs font-bold transition-all active:scale-95 flex items-center gap-1.5">
             <span class="material-symbols-outlined text-sm font-bold">keyboard_command_key</span>
             <span>Search Specs (Ctrl+K)</span>
           </button>
-          <a href="#cli-shell" class="bg-[var(--surface)] text-[var(--text-primary)] hover:border-zinc-500 border border-[var(--border)] px-6 py-2.5 rounded-lg text-sm font-semibold transition-all active:scale-95 flex items-center gap-2">
-            <span class="material-symbols-outlined text-sm">terminal</span>
-            <span>Interactive Terminal</span>
-          </a>
         </div>
       </div>
-      
-      <!-- Profile Picture frame -->
+
+      <!-- Profile Avatar -->
       <div class="md:col-span-4 flex justify-center md:justify-end">
-        <div class="w-64 h-64 md:w-72 md:h-72 profile-frame p-1 hover:border-zinc-500 transition-colors duration-500 shadow-2xl">
-          <img id="hero-avatar" alt="Sirigiri Anand Kumar Profile Photo" class="w-full h-full object-cover rounded-[22px] filter grayscale hover:grayscale-0 transition-all duration-700" src="https://github.com/Anandsirigiri07.png"/>
+        <div class="w-48 h-48 md:w-56 md:h-56 avatar-frame p-1">
+          <img id="operator-avatar" alt="Sirigiri Anand Kumar Avatar" class="w-full h-full object-cover rounded-[22px] filter grayscale hover:grayscale-0 transition-all duration-700" src="https://github.com/Anandsirigiri07.png"/>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 01: FEATURED PROJECTS -->
-    <section id="projects" class="space-y-8 scroll-mt-20">
-      <div class="space-y-2">
-        <h2 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">workspace_premium</span>
-          <span>Featured Repositories</span>
-        </h2>
-        <p class="text-sm text-[var(--text-secondary)]">Dynamic repository cards prioritized by stars, complexity, and active building cycles.</p>
+    <!-- LIVE WORKSPACE TELEMETRY WIDGET -->
+    <section class="space-y-4">
+      <div class="flex justify-between items-center border-b border-[var(--border)] pb-2">
+        <span class="text-[10px] font-mono font-bold text-zinc-500 uppercase tracking-widest block">/current_operation_node</span>
+        <span class="text-[9px] font-mono text-zinc-600 uppercase" id="telemetry-updated-at">UPDATED JUST NOW</span>
       </div>
 
-      <!-- Projects Grid -->
-      <div id="featured-projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- skeletons rendered by JS -->
-        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 h-48"></div>
-        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 h-48"></div>
+      <!-- Live Status Glassmorphic Card -->
+      <div class="portfolio-card p-6 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" id="live-status-card" title="Double click to edit status">
+        <!-- Live status description -->
+        <div class="md:col-span-8 space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="pulse-indicator online" id="telemetry-status-light"></span>
+            <span class="text-[10px] font-bold font-mono tracking-wider uppercase text-zinc-500">Live Focus Badge</span>
+          </div>
+          <div class="space-y-2">
+            <p id="telemetry-status-text" class="text-sm font-mono text-[var(--text-primary)] font-semibold leading-relaxed">
+              Solving heap allocations & contribution streams
+            </p>
+            <div class="flex items-center gap-2 text-xs text-[var(--text-secondary)] font-medium">
+              <span class="material-symbols-outlined text-sm text-zinc-500">adjust</span>
+              <span>Target: <span id="telemetry-current-focus" class="text-indigo-400 font-semibold font-mono">Java Algorithms</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry numbers -->
+        <div class="md:col-span-4 grid grid-cols-2 gap-4 border-t md:border-t-0 md:border-l border-[var(--border)] pt-4 md:pt-0 md:pl-6 text-center md:text-left">
+          <div class="space-y-1">
+            <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase block">Coffee Intake</span>
+            <div class="flex items-center justify-center md:justify-start gap-1 text-amber-500">
+              <span class="material-symbols-outlined text-sm">local_cafe</span>
+              <span id="telemetry-coffee-count" class="text-sm font-bold font-mono text-[var(--text-primary)]">2 cups</span>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase block">Commits Today</span>
+            <div class="flex items-center justify-center md:justify-start gap-1 text-green-500">
+              <span class="material-symbols-outlined text-sm">query_stats</span>
+              <span id="telemetry-commits-today" class="text-sm font-bold font-mono text-[var(--text-primary)]">3 today</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-[9px] font-mono text-zinc-500 text-center uppercase tracking-wide">
+        💡 Double-click the card above or toggle Edit Mode to dynamically update my status.
       </div>
     </section>
 
-    <!-- SECTION 02: CURRENTLY BUILDING -->
-    <section id="building" class="space-y-6">
-      <div class="space-y-1">
-        <h3 class="text-lg font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">sync_alt</span>
-          <span>Currently Building / Recent Streams</span>
+    <!-- ACTIVE BUILD OPERATIONS -->
+    <section class="space-y-6">
+      <div class="space-y-1 border-b border-[var(--border)] pb-2">
+        <h3 class="text-xs font-mono font-bold text-[var(--text-secondary)] uppercase tracking-widest flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[var(--accent)] text-sm animate-spin">rotate_right</span>
+          <span>Ongoing Projects Progress</span>
         </h3>
-        <p class="text-xs text-[var(--text-secondary)]">Recently pushed repositories extracted from real-time sync nodes.</p>
+        <p class="text-[10px] text-[var(--text-muted)] font-mono">What I am actively building right now.</p>
       </div>
 
-      <div id="currently-building-list" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <!-- dyn items -->
-        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 h-24"></div>
-        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 h-24"></div>
-        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 h-24"></div>
-        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 h-24"></div>
+      <div id="currently-building-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- JS injected -->
+        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 h-24"></div>
+        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 h-24"></div>
       </div>
     </section>
 
-    <!-- SECTION 03: GITHUB INSIGHTS & INTERACTIVE SHELL -->
-    <section id="insights" class="space-y-8 scroll-mt-20">
-      <div class="space-y-2">
-        <h2 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">analytics</span>
-          <span>GitHub Insights & System Console</span>
+    <!-- PORTFOLIO PROJECTS (ORIGINAL REPOSITORIES ONLY) -->
+    <section id="projects" class="space-y-6 scroll-mt-20">
+      <div class="space-y-1 border-b border-[var(--border)] pb-2">
+        <h2 class="text-xl font-bold font-display tracking-tight text-[var(--text-primary)] flex items-center gap-2">
+          <span class="material-symbols-outlined text-[var(--text-muted)] text-lg">code_blocks</span>
+          <span>Original Repositories</span>
         </h2>
-        <p class="text-sm text-[var(--text-secondary)]">Real-time commit telemetry and interactive CLI shell terminal fetched directly from Git nodes.</p>
+        <p class="text-xs text-[var(--text-secondary)]">Public codebases and source files synced directly from GitHub profile.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-        <!-- Heatmap Calendar (span-8) -->
-        <div class="md:col-span-8 dev-card rounded-xl p-6 space-y-4">
-          <span class="text-xs font-bold text-[var(--text-secondary)] tracking-wider uppercase font-mono">> contribution_heatmap</span>
-          <div class="github-chart rounded-lg flex justify-center items-center overflow-x-auto min-h-[140px]">
-            <img src="https://ghchart.rshah.org/3b82f6/Anandsirigiri07" alt="Sirigiri Anand Kumar GitHub Contributions Calendar" class="w-full h-auto filter opacity-80 hover:opacity-100 transition-opacity duration-300"/>
+      <!-- Repositories Grid -->
+      <div id="featured-projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- skeletons -->
+        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 h-40"></div>
+        <div class="animate-pulse bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 h-40"></div>
+      </div>
+
+      <!-- Languages Aggregate & GitHub Contributions -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-4">
+        <!-- Contribution Chart (span-7) -->
+        <div class="md:col-span-7 portfolio-card p-5 space-y-4">
+          <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest block">/contribution_heatmap</span>
+          <div class="github-chart rounded-xl flex justify-center items-center overflow-x-auto min-h-[140px] p-2">
+            <img src="https://ghchart.rshah.org/6366f1/Anandsirigiri07" alt="GitHub contributions timeline" class="w-full h-auto filter opacity-85 hover:opacity-100 transition-opacity duration-300"/>
           </div>
         </div>
-
-        <!-- Languages (span-4) -->
-        <div class="md:col-span-4 dev-card rounded-xl p-6 flex flex-col justify-between">
+        <!-- Stack Densities (span-5) -->
+        <div class="md:col-span-5 portfolio-card p-5 flex flex-col justify-between">
           <div class="space-y-4">
-            <span class="text-xs font-bold text-[var(--text-secondary)] tracking-wider uppercase font-mono block">> languages_aggregate</span>
+            <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest block">/stack_densities</span>
             <div id="languages-chart-container" class="space-y-3 pt-2">
-              <div class="text-xs text-[var(--text-secondary)]">Calculating stack densities...</div>
+              <div class="text-xs text-[var(--text-secondary)] font-mono">Analyzing codebase nodes...</div>
             </div>
-          </div>
-        </div>
-
-        <!-- CLI Terminal Shell Console Embed (span-12) -->
-        <div id="cli-shell" class="md:col-span-12 cli-terminal rounded-xl overflow-hidden shadow-2xl scroll-mt-20">
-          <!-- Window Header Bar -->
-          <div class="bg-[var(--surface)] border-b border-[var(--border)] px-4 py-2.5 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
-              <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
-              <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
-            </div>
-            <span class="text-xs font-mono text-[var(--text-secondary)] font-semibold tracking-wider">CLI TERMINAL SHELL // sirigiri@anand_systems</span>
-            <div class="w-12"></div>
-          </div>
-          <!-- Terminal Body -->
-          <div id="cli-terminal-body" class="p-6 h-64 overflow-y-auto text-xs text-[var(--text-secondary)] font-mono space-y-3">
-            <div class="text-[var(--text-muted)]">> Systems sync completed successfully. Type 'help' to review available directives.</div>
-            <div id="cli-terminal-history" class="space-y-2"></div>
-            <!-- Interactive prompt line -->
-            <div class="flex items-center">
-              <span class="text-[var(--accent)] font-bold shrink-0">sirigiri@anand_systems:~$</span>
-              <input type="text" id="cli-input" class="bg-transparent border-none outline-none text-[var(--text-primary)] font-mono flex-1 p-0 ml-2 focus:ring-0" autocomplete="off" autofocus/>
-              <span class="cli-cursor shrink-0"></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Live Activity Log (span-12) -->
-        <div class="md:col-span-12 dev-card rounded-xl p-6 space-y-4">
-          <div class="flex justify-between items-center pb-2 border-b border-[var(--border)]">
-            <span class="text-xs font-bold text-[var(--text-secondary)] tracking-wider uppercase font-mono">> live_activity_feed</span>
-            <span class="text-[10px] text-[var(--text-muted)] uppercase tracking-widest font-mono">Real-Time logs</span>
-          </div>
-          <div id="latest-activity-feed" class="activity-log text-xs space-y-2.5 text-[var(--text-secondary)] max-h-60 overflow-y-auto pr-2">
-            <div class="text-[var(--text-muted)]">> Synchronizing event loops...</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 04: TIMELINE (EXPERIENCE) -->
-    <section id="experience" class="grid grid-cols-1 md:grid-cols-12 gap-8 scroll-mt-20">
-      <div class="md:col-span-4 space-y-4">
-        <h2 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">history</span>
-          <span>Experience Timeline</span>
+    <!-- CHRONOLOGY & EXPERIENCE -->
+    <section id="experience" class="space-y-6 scroll-mt-20">
+      <div class="space-y-1 border-b border-[var(--border)] pb-2">
+        <h2 class="text-xl font-bold font-display tracking-tight text-[var(--text-primary)] flex items-center gap-2">
+          <span class="material-symbols-outlined text-[var(--text-muted)] text-lg">history_edu</span>
+          <span>Timeline Chronology</span>
         </h2>
-        <p class="text-sm text-[var(--text-secondary)]">
-          Academic milestones, project leadership, research, and open source development tracks.
-        </p>
+        <p class="text-xs text-[var(--text-secondary)]">Academic milestones, open-source programs, and hackathon records.</p>
       </div>
       
-      <div class="md:col-span-8">
-        <div class="timeline-track space-y-2">
-          
-          <!-- Timeline Node GSSoC -->
-          <div class="timeline-node">
-            <div class="space-y-1">
-              <span class="text-xs font-bold text-[var(--text-muted)] tracking-wider font-mono">May 2026 - Present</span>
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Open-Source Contributor — GirlScript Summer of Code (GSSoC)</h3>
-              <span class="text-xs text-[var(--text-secondary)] font-semibold block">Open Source Program Collaboration</span>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-2">
-                Actively contributing to open-source project ecosystems, resolving logic issues, optimizing code blocks, and reviewing peer pull requests inside collaborative developer sandboxes.
-              </p>
-            </div>
+      <div class="timeline-track space-y-2">
+        <!-- Milestone 1 GSSoC -->
+        <div class="timeline-node">
+          <div class="space-y-1">
+            <span class="text-[9px] font-bold text-[var(--accent)] tracking-wider font-mono uppercase">May 2026 - Present</span>
+            <h3 class="text-sm font-bold text-[var(--text-primary)]">Open-Source Contributor — GirlScript Summer of Code (GSSoC)</h3>
+            <span class="text-xs text-zinc-500 font-semibold block">Collaborative Software Programs</span>
+            <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-1">
+              Active contributor to GSSoC projects, resolving logic errors, checking packages, optimizing code blocks, and reviewing pull request integrations.
+            </p>
           </div>
+        </div>
 
-          <!-- Timeline Node DSA -->
-          <div class="timeline-node">
-            <div class="space-y-1">
-              <span class="text-xs font-bold text-[var(--text-muted)] tracking-wider font-mono">2025 - Present</span>
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Algorithms Specialist — Data Structures & Algorithms (DSA) in Java</h3>
-              <span class="text-xs text-[var(--text-secondary)] font-semibold block">Academic Base & Implementation</span>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-2">
-                Coding data structure parameters (linked nodes, hash heaps, binary trees) and sorting partition algorithms in Java. Analyzing asymptotic runtimes (Big O), load balances, and memory footprints.
-              </p>
-            </div>
+        <!-- Milestone 2 Hack2Skill PromptWars -->
+        <div class="timeline-node">
+          <div class="space-y-1">
+            <span class="text-[9px] font-bold text-[var(--accent)] tracking-wider font-mono uppercase">May 2026</span>
+            <h3 class="text-sm font-bold text-[var(--text-primary)]">Innovator — Hack2Skill PromptWars</h3>
+            <span class="text-xs text-zinc-500 font-semibold block">Generative AI Challenge</span>
+            <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-1">
+              Engineered optimal LLM prompt structures, bypassing context constraints and resolving parsing failures in complex inference setups.
+            </p>
           </div>
-          
-          <!-- Timeline Node 1 -->
-          <div class="timeline-node">
-            <div class="space-y-1">
-              <span class="text-xs font-bold text-[var(--text-muted)] tracking-wider font-mono">June 2026</span>
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Project Lead — SIDDHI AI Crime Analytics</h3>
-              <span class="text-xs text-[var(--text-secondary)] font-semibold block">Undergraduate Project / Law Enforcement Tech</span>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-2">
-                Lead developer building an AI crime analytics utility translating natural language search parameters into crime mapping indicators. Engineered Crime graphs, geographic overlays, and evidence compilation.
-              </p>
-            </div>
-          </div>
+        </div>
 
-          <!-- Timeline Node 2 -->
-          <div class="timeline-node">
-            <div class="space-y-1">
-              <span class="text-xs font-bold text-[var(--text-muted)] tracking-wider font-mono">May 2026</span>
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Full-Stack Architect — GitNest Platform</h3>
-              <span class="text-xs text-[var(--text-secondary)] font-semibold block">Developer Systems Collaboration</span>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-2">
-                Designed a lightweight Git hosting server script mapping repository syncing commits, branch checks, and code reviews, built to run with minimal resources.
-              </p>
-            </div>
+        <!-- Milestone 3 DSA -->
+        <div class="timeline-node">
+          <div class="space-y-1">
+            <span class="text-[9px] font-bold text-[var(--accent)] tracking-wider font-mono uppercase">2025 - Present</span>
+            <h3 class="text-sm font-bold text-[var(--text-primary)]">Algorithms Specialist — DSA Java</h3>
+            <span class="text-xs text-zinc-500 font-semibold block">Self-Authored Algorithms & Math</span>
+            <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-1">
+              Coding balanced search trees, hash tables, and concurrent graph mapping algorithms in Java, focusing on runtime complexity and memory leaks.
+            </p>
           </div>
+        </div>
 
-          <!-- Timeline Node 3 -->
-          <div class="timeline-node">
-            <div class="space-y-1">
-              <span class="text-xs font-bold text-[var(--text-muted)] tracking-wider font-mono">April 2026</span>
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Systems Contributor — Gemini CLI (Stitch)</h3>
-              <span class="text-xs text-[var(--text-secondary)] font-semibold block">Open Source Systems Integration</span>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-2">
-                Programmed command structures translating natural language commands into console executions using MCP server interfaces.
-              </p>
-            </div>
+        <!-- Milestone 4 Reva University -->
+        <div class="timeline-node">
+          <div class="space-y-1">
+            <span class="text-[9px] font-bold text-[var(--accent)] tracking-wider font-mono uppercase">2024 - Present</span>
+            <h3 class="text-sm font-bold text-[var(--text-primary)]">Computer Science Engineering — REVA University</h3>
+            <span class="text-xs text-zinc-500 font-semibold block">Undergraduate Education</span>
+            <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-1">
+              Focusing on operating systems compilation nodes, database management logic, object-oriented parameters, and networking routes.
+            </p>
           </div>
-
-          <!-- Timeline Node 4 -->
-          <div class="timeline-node">
-            <div class="space-y-1">
-              <span class="text-xs font-bold text-[var(--text-muted)] tracking-wider font-mono">2024 - Present</span>
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Computer Science Student — Reva University</h3>
-              <span class="text-xs text-[var(--text-secondary)] font-semibold block">Academic Base Node</span>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed pt-2">
-                Studying algorithms compiling datasets, memory allocations, object-oriented concepts, relational SQL designs, and basic data networking rules.
-              </p>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
-    <!-- SECTION 05: ACHIEVEMENTS -->
-    <section id="achievements" class="space-y-8 scroll-mt-20">
-      <div class="space-y-2">
-        <h2 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">emoji_events</span>
-          <span>Achievements & Specs</span>
-        </h2>
-        <p class="text-sm text-[var(--text-secondary)]">Future-proof certifications pipeline, hackathons log, and academic competitions.</p>
+    <!-- LIVE DEV ACTIVITY FEED -->
+    <section class="space-y-4">
+      <div class="flex justify-between items-center border-b border-[var(--border)] pb-2">
+        <span class="text-[10px] font-mono font-bold text-zinc-500 uppercase tracking-widest block">/live_activity_stream</span>
+        <span class="text-[8px] text-[var(--text-muted)] font-mono uppercase tracking-wider">Log events feed</span>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Hackathons -->
-        <div class="dev-card rounded-xl p-6 space-y-4">
-          <div class="flex items-center gap-2 text-[var(--text-primary)]">
-            <span class="material-symbols-outlined text-[var(--text-secondary)]">groups</span>
-            <h3 class="font-bold">Hackathons</h3>
-          </div>
-          <ul class="space-y-3 text-xs text-[var(--text-secondary)] leading-relaxed">
-            <li class="pb-2 border-b border-[var(--border)] last:border-b-0">
-              <span class="font-bold text-[var(--text-primary)] block">Hack2Skill PromptWars Participant</span>
-              Engineered optimal prompt chains for large language models, solving context alignment and system constraint challenges.
-            </li>
-            <li class="pb-2 border-b border-[var(--border)] last:border-b-0">
-              <span class="font-bold text-[var(--text-primary)] block">Karnataka State Police Hackathon</span>
-              Developed AI analytical interfaces for active police investigation datasets.
-            </li>
-            <li class="pb-2 border-b border-[var(--border)] last:border-b-0">
-              <span class="font-bold text-[var(--text-primary)] block">Reva University Project Exhibition</span>
-              Presented Agri-Vision crop analysis deep learning models.
-            </li>
-          </ul>
-        </div>
-
-        <!-- Certifications -->
-        <div class="dev-card rounded-xl p-6 space-y-4">
-          <div class="flex items-center gap-2 text-[var(--text-primary)]">
-            <span class="material-symbols-outlined text-[var(--text-secondary)]">verified</span>
-            <h3 class="font-bold">Certifications</h3>
-          </div>
-          <ul class="space-y-3 text-xs text-[var(--text-secondary)] leading-relaxed">
-            <li class="pb-2 border-b border-[var(--border)] last:border-b-0">
-              <span class="font-bold text-[var(--text-primary)] block">AI / Computer Vision Foundations</span>
-              Exploring deep learning model weights, dataset normalizations, and image classifiers.
-            </li>
-            <li class="pb-2 border-b border-[var(--border)] last:border-b-0">
-              <span class="font-bold text-[var(--text-primary)] block">Object-Oriented Programming (Java)</span>
-              Studied concurrent thread locks, reentrant code buffers, and database locks.
-            </li>
-          </ul>
-        </div>
-
-        <!-- Academic Milestones -->
-        <div class="dev-card rounded-xl p-6 space-y-4">
-          <div class="flex items-center gap-2 text-[var(--text-primary)]">
-            <span class="material-symbols-outlined text-[var(--text-secondary)]">school</span>
-            <h3 class="font-bold">Academic Honors</h3>
-          </div>
-          <ul class="space-y-3 text-xs text-[var(--text-secondary)] leading-relaxed">
-            <li class="pb-2 border-b border-[var(--border)] last:border-b-0">
-              <span class="font-bold text-[var(--text-primary)] block">Reva University Merits</span>
-              Consistently scoring high marks in structured data compilation, mathematics, and database modules.
-            </li>
-            <li class="pb-2 border-b border-[var(--border)] last:border-b-0">
-              <span class="font-bold text-[var(--text-primary)] block">Computer Science Labathons</span>
-              First place in local algorithms optimization contests and system programming loops.
-            </li>
-          </ul>
+      <div class="portfolio-card p-6">
+        <div id="latest-activity-feed" class="text-xs space-y-3.5 max-h-56 overflow-y-auto pr-2">
+          <!-- Rendered via JS -->
+          <div class="text-zinc-500 font-mono">> Synchronizing log loops...</div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 06: RESUME SPEC -->
-    <section id="resume" class="dev-card rounded-2xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-      <div class="space-y-2">
-        <h2 class="text-xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">description</span>
-          <span>Technical Spec Resume</span>
-        </h2>
-        <p class="text-sm text-[var(--text-secondary)] max-w-xl">
-          Contains details regarding compiler languages, framework setups, academic indexes, and project architectures. Ready for download.
-        </p>
-      </div>
-      <div>
-        <a href="resume.pdf" download id="resume-download-btn" class="bg-[var(--text-primary)] text-[var(--bg)] px-6 py-3 rounded-lg text-sm font-semibold hover:opacity-85 transition-all active:scale-95 flex items-center gap-2 whitespace-nowrap">
-          <span class="material-symbols-outlined text-sm font-bold">download</span>
-          <span>Download PDF Spec</span>
-        </a>
+    <!-- RETRACTABLE INTERACTIVE TERMINAL dropdown console -->
+    <section class="space-y-4" id="cli-shell">
+      <div class="terminal-bar overflow-hidden">
+        <!-- Window Bar -->
+        <div class="bg-zinc-950/40 border-b border-[var(--border)] px-4 py-2.5 flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-green-500/60"></span>
+          </div>
+          <span class="text-[10px] font-mono text-[var(--text-secondary)] font-semibold tracking-wider">INTERACTIVE SYSTEM CONSOLE</span>
+          <span class="text-[9px] font-mono text-zinc-500 hover:text-[var(--accent)] cursor-pointer" onclick="document.getElementById('cli-input').focus()">[FOCUS]</span>
+        </div>
+        <!-- Body -->
+        <div id="cli-terminal-body" class="p-5 h-44 overflow-y-auto text-[11px] text-[var(--text-secondary)] font-mono space-y-2">
+          <div class="text-zinc-500">> Console active. Commands: 'help', 'coffee++', 'commits++', 'status online "message"', or 'admin'.</div>
+          <div id="cli-terminal-history" class="space-y-1.5"></div>
+          <div class="flex items-center pt-1">
+            <span class="text-[var(--accent)] font-bold shrink-0">sirigiri:~$</span>
+            <!-- standard native browser cursor and clean inputs -->
+            <input type="text" id="cli-input" class="bg-transparent border-none outline-none text-[var(--text-primary)] font-mono flex-1 p-0 ml-2 focus:ring-0 text-[11px]" autocomplete="off"/>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- SECTION 07: CONTACT -->
-    <section id="contact" class="border-t border-[var(--border)] pt-16 space-y-8 scroll-mt-20">
-      <div class="max-w-2xl">
-        <h2 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">alternate_email</span>
+    <!-- CONNECT SECTION -->
+    <section id="contact" class="border-t border-[var(--border)] pt-16 space-y-6 scroll-mt-20">
+      <div class="max-w-2xl space-y-2">
+        <h2 class="text-xl font-bold font-display tracking-tight text-[var(--text-primary)] flex items-center gap-2">
+          <span class="material-symbols-outlined text-[var(--text-muted)] text-lg">alternate_email</span>
           <span>Connect</span>
         </h2>
-        <p class="text-sm text-[var(--text-secondary)] pt-2 leading-relaxed">
-          Open to technical challenges, open-source projects collaboration, internships, and developer team assignments. Feel free to initiate contact.
+        <p class="text-xs text-[var(--text-secondary)] leading-relaxed">
+          Open to open-source contributions, technical collaborations, and software engineering internships.
         </p>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <!-- Email -->
-        <a href="mailto:anandsirigiri2006@gmail.com" class="dev-card rounded-xl p-5 flex flex-col items-start gap-3 hover:border-zinc-500 transition-colors">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">mail</span>
+        <a href="mailto:anandsirigiri2006@gmail.com" class="portfolio-card p-4 flex flex-col items-start gap-2.5 hover:border-[var(--accent)] transition-all">
+          <span class="material-symbols-outlined text-[var(--accent)] text-base">mail</span>
           <div class="flex flex-col">
-            <span class="text-[9px] font-bold text-[var(--text-muted)] uppercase font-mono">Email Coordinates</span>
-            <span class="text-xs text-[var(--text-primary)] truncate max-w-full font-medium">anandsirigiri2006@gmail.com</span>
+            <span class="text-[8px] font-bold text-zinc-500 uppercase font-mono">Email Coordinates</span>
+            <span class="text-[10px] text-[var(--text-primary)] truncate max-w-full font-semibold">anandsirigiri2006@gmail.com</span>
           </div>
         </a>
 
         <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/anand-sirigiri-a91910368/" target="_blank" class="dev-card rounded-xl p-5 flex flex-col items-start gap-3 hover:border-zinc-500 transition-colors">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">handshake</span>
+        <a href="https://www.linkedin.com/in/anand-sirigiri-a91910368/" target="_blank" class="portfolio-card p-4 flex flex-col items-start gap-2.5 hover:border-[var(--accent)] transition-all">
+          <span class="material-symbols-outlined text-[var(--accent)] text-base">handshake</span>
           <div class="flex flex-col">
-            <span class="text-[9px] font-bold text-[var(--text-muted)] uppercase font-mono">Professional Network</span>
-            <span class="text-xs text-[var(--text-primary)] font-medium">Sirigiri Anand Kumar</span>
+            <span class="text-[8px] font-bold text-zinc-500 uppercase font-mono">Professional LinkedIn</span>
+            <span class="text-[10px] text-[var(--text-primary)] font-semibold">Sirigiri Anand Kumar</span>
           </div>
         </a>
 
         <!-- GitHub -->
-        <a href="https://github.com/Anandsirigiri07" target="_blank" class="dev-card rounded-xl p-5 flex flex-col items-start gap-3 hover:border-zinc-500 transition-colors">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">code_blocks</span>
+        <a href="https://github.com/Anandsirigiri07" target="_blank" class="portfolio-card p-4 flex flex-col items-start gap-2.5 hover:border-[var(--accent)] transition-all">
+          <span class="material-symbols-outlined text-[var(--accent)] text-base">code</span>
           <div class="flex flex-col">
-            <span class="text-[9px] font-bold text-[var(--text-muted)] uppercase font-mono">Git Repository Node</span>
-            <span class="text-xs text-[var(--text-primary)] font-medium">@Anandsirigiri07</span>
+            <span class="text-[8px] font-bold text-zinc-500 uppercase font-mono">GitHub Profile</span>
+            <span class="text-[10px] text-[var(--text-primary)] font-semibold">@Anandsirigiri07</span>
           </div>
         </a>
 
         <!-- Resume -->
-        <a href="resume.pdf" download class="dev-card rounded-xl p-5 flex flex-col items-start gap-3 hover:border-zinc-500 transition-colors">
-          <span class="material-symbols-outlined text-[var(--text-secondary)]">contact_page</span>
+        <a href="resume.pdf" download class="portfolio-card p-4 flex flex-col items-start gap-2.5 hover:border-[var(--accent)] transition-all">
+          <span class="material-symbols-outlined text-[var(--accent)] text-base">description</span>
           <div class="flex flex-col">
-            <span class="text-[9px] font-bold text-[var(--text-muted)] uppercase font-mono">PDF Specifications</span>
-            <span class="text-xs text-[var(--text-primary)] font-medium">Download Resume</span>
+            <span class="text-[8px] font-bold text-zinc-500 uppercase font-mono">PDF Specifications</span>
+            <span class="text-[10px] text-[var(--text-primary)] font-semibold">Download Resume</span>
           </div>
         </a>
       </div>
@@ -482,9 +477,9 @@
   </main>
 
   <!-- Clean Footer -->
-  <footer class="max-w-6xl mx-auto px-6 py-8 border-t border-[var(--border)] text-xs text-[var(--text-secondary)] flex flex-col sm:flex-row justify-between items-center gap-4 mb-14 md:mb-0">
-    <p>&copy; 2026 SIRIGIRI ANAND KUMAR. ALL SPECIFICATIONS DATA-COMPILED.</p>
-    <p class="font-mono text-[10px] tracking-wider uppercase text-zinc-600">Sync: OK // System: Online</p>
+  <footer class="max-w-4xl mx-auto px-6 py-10 border-t border-[var(--border)] text-[10px] text-[var(--text-muted)] font-mono flex flex-col sm:flex-row justify-between items-center gap-4">
+    <p>&copy; 2026 SIRIGIRI ANAND KUMAR. ALL SPECIFICATIONS RECORDED.</p>
+    <p class="uppercase tracking-wider">Sync: active // node: online</p>
   </footer>
 
   <!-- JS Logic Script -->
