@@ -13,6 +13,12 @@ const PORT = 3000;
 
 app.use(express.json());
 
+// Log all API requests for debugging
+app.use("/api", (req, _res, next) => {
+  console.log(`[API] ${req.method} ${req.url} | Content-Type: ${req.headers["content-type"]}`);
+  next();
+});
+
 // REST Proxy for LeetCode to bypass CORS constraints
 app.get("/api/leetcode/:username", async (req, res) => {
   const username = req.params.username;
@@ -145,14 +151,19 @@ app.get("/api/github/:username", async (req, res) => {
 
 // Developer Login verification endpoint
 app.post("/api/admin/login", (req, res) => {
-  const { password } = req.body;
-  const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
-  if (password === adminPassword) {
-    return res.json({ success: true, token: adminPassword });
+  try {
+    const password = req.body?.password;
+    const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+    console.log("[API] Login attempt received. Body parsed:", !!req.body);
+    if (password === adminPassword) {
+      return res.json({ success: true, token: adminPassword });
+    }
+    return res.status(401).json({ success: false, error: "Incorrect developer password." });
+  } catch (err: any) {
+    console.error("[API] Login route error:", err.message);
+    return res.status(500).json({ success: false, error: "Internal server error." });
   }
-  return res.status(401).json({ success: false, error: "Incorrect developer password." });
 });
-
 
 
 // Configure Vite integration for asset rendering
@@ -170,6 +181,12 @@ async function main() {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
+
+  // Global JSON error handler — ensures API routes NEVER return HTML errors
+  app.use("/api", (err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    console.error("[API Error Handler]", err.message || err);
+    res.status(err.status || 500).json({ success: false, error: err.message || "Internal server error" });
+  });
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);

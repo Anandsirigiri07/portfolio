@@ -82,6 +82,13 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: adminPasswordInput }),
       });
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        const text = await res.text();
+        console.error("Login returned non-JSON:", text.substring(0, 200));
+        setLoginError("Server returned an unexpected response. Please refresh and try again.");
+        return;
+      }
       const data = await res.json();
       if (res.ok && data.success) {
         setAdminToken(data.token);
