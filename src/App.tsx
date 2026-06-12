@@ -13,8 +13,6 @@ import {
   Linkedin,
   MapPin,
   ExternalLink,
-  Bot,
-  User,
   GraduationCap,
   Briefcase,
   FileCheck,
@@ -34,7 +32,6 @@ import AchievementManager from "./components/AchievementManager";
 import ProjectList from "./components/ProjectList";
 import ResumeBuilder from "./components/ResumeBuilder";
 import AdminPanel from "./components/AdminPanel";
-import AiAssistant from "./components/AiAssistant";
 
 export default function App() {
   // Load state from localStorage if available, else fallback to initial data
@@ -477,8 +474,6 @@ export default function App() {
         <div>PORTFOLIO-OS v1.20</div>
       </footer>
 
-      {/* Recruiter Live AI Assistant chat widget (Trained on Anand's profile details) */}
-      <AiAssistant portfolioData={portfolioData} />
     </div>
   );
 }
