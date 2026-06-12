@@ -5,6 +5,7 @@ import { PortfolioData, Certification, SkillProgress, TimelineMilestone } from "
 
 interface AdminPanelProps {
   data: PortfolioData;
+  adminToken: string | null;
   onUpdateData: (updated: Partial<PortfolioData>) => void;
   onAddCertification: (cert: Omit<Certification, "id">) => void;
   onDeleteCertification: (id: string) => void;
@@ -15,6 +16,7 @@ interface AdminPanelProps {
 
 export default function AdminPanel({
   data,
+  adminToken,
   onUpdateData,
   onAddCertification,
   onDeleteCertification,
@@ -55,41 +57,6 @@ export default function AdminPanel({
   const [certProof, setCertProof] = useState("");
 
   const [savingStatus, setSavingStatus] = useState<string | null>(null);
-
-  // API Key config states
-  const [geminiApiKey, setGeminiApiKey] = useState("");
-  const [apiKeyConfigured, setApiKeyConfigured] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/config")
-      .then((res) => res.json())
-      .then((data) => setApiKeyConfigured(data.configured))
-      .catch((err) => console.error("Error fetching config status:", err));
-  }, []);
-
-  const handleSaveApiKey = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!geminiApiKey.trim()) return;
-
-    try {
-      const res = await fetch("/api/config", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ geminiApiKey: geminiApiKey.trim() }),
-      });
-      const resData = await res.json();
-      if (resData.success) {
-        setApiKeyConfigured(true);
-        setGeminiApiKey("");
-        setSavingStatus("Gemini API Key configured successfully!");
-        setTimeout(() => setSavingStatus(null), 3500);
-      } else {
-        alert("Failed to save key: " + resData.error);
-      }
-    } catch (err: any) {
-      alert("Error: " + err.message);
-    }
-  };
 
   const handleSaveGeneral = (e: React.FormEvent) => {
     e.preventDefault();
@@ -730,49 +697,6 @@ export default function AdminPanel({
             </div>
           </div>
 
-          {/* AI Co-Pilot configuration card */}
-          <div className="bg-slate-950 border border-white/5 rounded-2xl p-6 space-y-4">
-            <h5 className="text-sm uppercase font-mono tracking-wider text-slate-400 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-cyan-400" /> AI Co-Pilot Integrator
-            </h5>
-            <p className="text-xs text-slate-500 font-sans">
-              Manage the server-side Gemini 3.5 API key configuration. This is stored locally in `.env.local` to enable the chatbot.
-            </p>
-
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase">
-              <span>Status:</span>
-              {apiKeyConfigured ? (
-                <span className="text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded animate-pulse">
-                  Connected & Active
-                </span>
-              ) : (
-                <span className="text-amber-400 font-bold bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">
-                  Keys Missing (Offline)
-                </span>
-              )}
-            </div>
-
-            <form onSubmit={handleSaveApiKey} className="space-y-3 font-mono text-xs">
-              <div>
-                <label className="text-[9px] text-slate-500 uppercase block mb-1">Gemini API Key</label>
-                <input
-                  type="password"
-                  required
-                  placeholder={apiKeyConfigured ? "••••••••••••••••••••" : "AIzaSy..."}
-                  value={geminiApiKey}
-                  onChange={(e) => setGeminiApiKey(e.target.value)}
-                  className="w-full px-3 py-2 rounded bg-slate-900 border border-slate-800 text-slate-250 focus:outline-none focus:border-cyan-500"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-350 hover:text-white transition-colors rounded text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <Save className="h-3.5 w-3.5" /> SAVE GEMINI KEY
-              </button>
-            </form>
-          </div>
         </div>
       </div>
     </div>

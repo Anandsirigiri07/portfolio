@@ -19,7 +19,8 @@ import {
   ShieldCheck,
   Compass,
   ArrowRight,
-  Monitor
+  Monitor,
+  Lock
 } from "lucide-react";
 import { Achievement, Project, Certification, SkillProgress, TimelineMilestone, PortfolioData } from "./types";
 import { INITIAL_PORTFOLIO_DATA } from "./data";
@@ -64,6 +65,35 @@ export default function App() {
 
   // Active navigation tab
   const [activeTab, setActiveTab] = useState<"dashboard" | "journey" | "projects" | "achievements" | "resume" | "admin">("dashboard");
+
+  // Admin authentication states
+  const [adminToken, setAdminToken] = useState<string | null>(() => {
+    return sessionStorage.getItem("sirigiri_admin_token") || null;
+  });
+  const [adminPasswordInput, setAdminPasswordInput] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  const handleAdminLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError("");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: adminPasswordInput }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setAdminToken(data.token);
+        sessionStorage.setItem("sirigiri_admin_token", data.token);
+        setAdminPasswordInput("");
+      } else {
+        setLoginError(data.error || "Incorrect developer password.");
+      }
+    } catch (err: any) {
+      setLoginError("Connection failed: " + err.message);
+    }
+  };
 
   // Save portfolio state to localStorage on update
   useEffect(() => {
@@ -451,15 +481,60 @@ export default function App() {
                 )}
 
                 {activeTab === "admin" && (
-                  <AdminPanel
-                    data={portfolioData}
-                    onUpdateData={handleUpdateData}
-                    onAddCertification={handleAddCertification}
-                    onDeleteCertification={handleDeleteCertification}
-                    onUpdateSkill={handleUpdateSkill}
-                    profileImage={profileImage}
-                    onUploadProfileImage={handleUploadProfileImage}
-                  />
+                  !adminToken ? (
+                    <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-mono">
+                      <div className="max-w-md w-full space-y-6 p-8 bg-[#09090b]/80 border border-brand-border rounded-2xl shadow-2xl relative overflow-hidden backdrop-blur-md">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+                        <div className="text-center">
+                          <div className="mx-auto h-12 w-12 rounded-xl bg-slate-900 border border-brand-border flex items-center justify-center text-brand-accent mb-4 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+                            <Lock className="h-5 w-5" />
+                          </div>
+                          <h2 className="text-sm font-bold text-white uppercase tracking-wider">Developer Auth Required</h2>
+                          <p className="mt-2 text-[10px] text-slate-500 font-sans leading-normal">
+                            Enter your developer password to unlock administrative access to the Career OS Command Center.
+                          </p>
+                        </div>
+                        <form className="space-y-4" onSubmit={handleAdminLogin}>
+                          <div>
+                            <label className="text-[10px] text-slate-500 uppercase block mb-1">Developer Password</label>
+                            <input
+                              type="password"
+                              required
+                              value={adminPasswordInput}
+                              onChange={(e) => setAdminPasswordInput(e.target.value)}
+                              placeholder="••••••••••••"
+                              className="appearance-none relative block w-full px-3 py-2 border border-brand-border placeholder-slate-650 text-slate-200 rounded bg-slate-900 focus:outline-none focus:border-brand-accent text-xs"
+                              autoFocus
+                            />
+                          </div>
+
+                          {loginError && (
+                            <div className="text-[10px] text-red-400 bg-red-950/20 border border-red-900/30 p-2.5 rounded text-center leading-normal">
+                              {loginError}
+                            </div>
+                          )}
+
+                          <button
+                            type="submit"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-[10px] font-bold rounded text-black bg-slate-100 hover:bg-white focus:outline-none uppercase tracking-wider cursor-pointer transition-colors"
+                          >
+                            Validate Credentials
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  ) : (
+                    <AdminPanel
+                      data={portfolioData}
+                      adminToken={adminToken}
+                      onUpdateData={handleUpdateData}
+                      onAddCertification={handleAddCertification}
+                      onDeleteCertification={handleDeleteCertification}
+                      onUpdateSkill={handleUpdateSkill}
+                      profileImage={profileImage}
+                      onUploadProfileImage={handleUploadProfileImage}
+                    />
+                  )
                 )}
               </motion.div>
             </AnimatePresence>
