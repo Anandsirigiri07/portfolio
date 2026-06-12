@@ -1,0 +1,6 @@
+{
+  "name": "Sirigiri Anand Kumar Portfolio",
+  "description": "An interactive digital timeline and recruiter-focused career operating system for Sirigiri Anand Kumar, B.Tech student in CSIT at REVA University.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
