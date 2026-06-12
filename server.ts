@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
-import fs from "fs";
+
 
 // Load .env.local if present, then load .env
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
@@ -153,15 +153,7 @@ app.post("/api/admin/login", (req, res) => {
   return res.status(401).json({ success: false, error: "Incorrect developer password." });
 });
 
-// Helper validation for admin operations
-function verifyAdmin(req: express.Request, res: express.Response, next: express.NextFunction) {
-  const authHeader = req.headers.authorization;
-  const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
-  if (!authHeader || authHeader !== `Bearer ${adminPassword}`) {
-    return res.status(401).json({ error: "Unauthorized access: Invalid developer password." });
-  }
-  next();
-}
+
 
 // Configure Vite integration for asset rendering
 async function main() {
