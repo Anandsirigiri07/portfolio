@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
 
@@ -11,7 +12,8 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use("/assets", express.static(path.join(process.cwd(), "assets")));
 
 // Log all API requests for debugging
 app.use("/api", (req, _res, next) => {
@@ -162,6 +164,72 @@ app.post("/api/admin/login", (req, res) => {
   } catch (err: any) {
     console.error("[API] Login route error:", err.message);
     return res.status(500).json({ success: false, error: "Internal server error." });
+  }
+});
+
+// Profile image upload (local development — stores on filesystem)
+app.post("/api/profile/upload", (req, res) => {
+  try {
+    const token = req.headers["x-admin-token"] as string;
+    const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+    if (!token || token !== adminPassword) {
+      return res.status(401).json({ success: false, error: "Unauthorized" });
+    }
+
+    const { image } = req.body;
+    if (!image || typeof image !== "string") {
+      return res.status(400).json({ success: false, error: "Image data is required." });
+    }
+
+    const matches = image.match(/^data:image\/(\w+);base64,(.+)$/s);
+    if (!matches) {
+      return res.status(400).json({ success: false, error: "Invalid image format." });
+    }
+
+    const ext = matches[1] === "jpeg" ? "jpg" : matches[1];
+    const base64Data = matches[2];
+    const buffer = Buffer.from(base64Data, "base64");
+
+    const assetsDir = path.join(process.cwd(), "assets");
+    if (!fs.existsSync(assetsDir)) {
+      fs.mkdirSync(assetsDir, { recursive: true });
+    }
+
+    // Clean up old profile uploads
+    const files = fs.readdirSync(assetsDir);
+    for (const f of files) {
+      if (f.startsWith("profile-upload.")) {
+        fs.unlinkSync(path.join(assetsDir, f));
+      }
+    }
+
+    const filePath = path.join(assetsDir, `profile-upload.${ext}`);
+    fs.writeFileSync(filePath, buffer);
+    console.log(`[API] Profile image saved: ${filePath} (${buffer.length} bytes)`);
+
+    return res.json({ success: true, url: `/assets/profile-upload.${ext}` });
+  } catch (err: any) {
+    console.error("[API] Profile upload error:", err.message);
+    return res.status(500).json({ success: false, error: "Failed to save profile image." });
+  }
+});
+
+// Profile image retrieval (local development — reads from filesystem)
+app.get("/api/profile/get", (_req, res) => {
+  try {
+    const assetsDir = path.join(process.cwd(), "assets");
+    if (fs.existsSync(assetsDir)) {
+      const files = fs.readdirSync(assetsDir);
+      const profileFile = files.find((f) => f.startsWith("profile-upload."));
+      if (profileFile) {
+        const filePath = path.join(assetsDir, profileFile);
+        const stats = fs.statSync(filePath);
+        return res.json({ success: true, url: `/assets/${profileFile}?t=${stats.mtimeMs}` });
+      }
+    }
+    return res.json({ success: true, url: null });
+  } catch {
+    return res.json({ success: true, url: null });
   }
 });
 

@@ -50,7 +50,7 @@ export default function App() {
 
   // Profile picture base64 state
   const [profileImage, setProfileImage] = useState<string | null>(() => {
-    return localStorage.getItem("sirigiri_profile_image") || null;
+    return localStorage.getItem("sirigiri_profile_image") || "/profile.png";
   });
 
   // Active visual theme state
@@ -107,6 +107,22 @@ export default function App() {
     localStorage.setItem("sirigiri_portfolio_data", JSON.stringify(portfolioData));
   }, [portfolioData]);
 
+  // Fetch the server-persisted profile image on mount (visible to ALL visitors)
+  useEffect(() => {
+    const fetchServerProfileImage = async () => {
+      try {
+        const res = await fetch("/api/profile/get");
+        const data = await res.json();
+        if (data.success && data.url) {
+          setProfileImage(data.url);
+        }
+      } catch (err) {
+        console.error("[Profile] Server fetch failed, using localStorage fallback:", err);
+      }
+    };
+    fetchServerProfileImage();
+  }, []);
+
   // Handle general update
   const handleUpdateData = (fields: Partial<PortfolioData>) => {
     setPortfolioData((prev) => ({
@@ -115,10 +131,32 @@ export default function App() {
     }));
   };
 
-  // Handle profile image update
-  const handleUploadProfileImage = (b64: string) => {
+  // Handle profile image update — persists to server so ALL visitors see it
+  const handleUploadProfileImage = async (b64: string) => {
+    // Set locally immediately for instant visual feedback
     setProfileImage(b64);
     localStorage.setItem("sirigiri_profile_image", b64);
+
+    // Upload to server for global persistence (Vercel Blob in production, filesystem in dev)
+    try {
+      const res = await fetch("/api/profile/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token": adminToken || "",
+        },
+        body: JSON.stringify({ image: b64 }),
+      });
+      const data = await res.json();
+      if (data.success && data.url) {
+        setProfileImage(data.url);
+        console.log("[Profile] Image persisted to server successfully.");
+      } else {
+        console.warn("[Profile] Server upload returned:", data.error);
+      }
+    } catch (err) {
+      console.error("[Profile] Server upload failed, image stored in localStorage only:", err);
+    }
   };
 
   // Administrative functions for achievements
