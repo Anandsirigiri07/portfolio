@@ -65,7 +65,7 @@ export default function ResumeBuilder({ data }: ResumeBuilderProps) {
     text += `========================================\n`;
     text += `ACADEMIC SUMMARY\n`;
     text += `========================================\n`;
-    text += `${data.university} \n- B.Tech in CSIT (2023 - 2027)\n\n`;
+    text += `${data.university} \n- B.Tech in CSIT (2023 - 2027)\n- Current Term: 1st Year, 2nd Semester\n- 1st Sem SGPA: 9.0\n\n`;
 
     text += `========================================\n`;
     text += `EXPERIENCE & OPEN SOURCE CONTRIBUTIONS\n`;
@@ -315,12 +315,15 @@ export default function ResumeBuilder({ data }: ResumeBuilderProps) {
                 <h4 className={`text-[11px] font-mono tracking-widest uppercase pb-1 border-b border-slate-400/20 ${styleMode === "ats" ? "text-black" : "text-white"}`}>
                   04. Academic Major Code
                 </h4>
-                <div className="text-xs">
+                <div className="text-xs space-y-0.5">
                   <p className={`font-bold ${styleMode === "ats" ? "text-black" : "text-white"}`}>
                     REVA University
                   </p>
                   <p className={styleMode === "ats" ? "text-slate-600" : "text-slate-400"}>
                     B.Tech in Computer Science and IT (CSIT)
+                  </p>
+                  <p className={styleMode === "ats" ? "text-slate-700 font-semibold" : "text-slate-300 font-semibold"}>
+                    1st Sem SGPA: 9.0 | 2nd Sem (1st Year) Current
                   </p>
                   <p className="font-mono text-[10px] text-slate-500 mt-1">2023 - 2027</p>
                   <p className="text-[10px] text-slate-500 mt-0.5">Bangalore, Karnataka, IN</p>

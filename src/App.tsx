@@ -40,7 +40,12 @@ export default function App() {
     const cached = localStorage.getItem("sirigiri_portfolio_data");
     if (cached) {
       try {
-        return JSON.parse(cached);
+        const parsed = JSON.parse(cached);
+        if (parsed.email === "anandsirigiri2006@gmail.com") {
+          localStorage.removeItem("sirigiri_portfolio_data");
+          return INITIAL_PORTFOLIO_DATA;
+        }
+        return parsed;
       } catch (e) {
         console.error("Failed to parse cached portfolio data", e);
       }
@@ -406,25 +411,25 @@ export default function App() {
                 <div>
                   <div className="flex justify-between items-center text-xs font-mono mb-1 text-slate-400">
                     <span>Year 1 Completion</span>
-                    <span>100%</span>
+                    <span>50%</span>
                   </div>
                   <div className="h-1 bg-slate-900 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#10b981] w-full"></div>
+                    <div className="h-full bg-[#10b981] w-1/2"></div>
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between items-center text-xs font-mono mb-1 text-slate-400">
                     <span>Year 2 Placement Foundations</span>
-                    <span>25%</span>
+                    <span>0%</span>
                   </div>
                   <div className="h-1 bg-slate-900 rounded-full overflow-hidden">
-                    <div className="h-full bg-brand-primary w-1/4 transition-all"></div>
+                    <div className="h-full bg-brand-primary w-0 transition-all"></div>
                   </div>
                 </div>
               </div>
 
               <div className="mt-4 p-2 bg-[#09090b] rounded border border-brand-border font-mono text-[9px] text-slate-500 leading-snug">
-                Academic status: Year 2 Prep underway.
+                Academic status: 1st Year, 2nd Sem in progress. 1st Sem SGPA: 9.0
               </div>
             </div>
           </div>

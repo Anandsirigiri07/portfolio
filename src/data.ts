@@ -6,7 +6,7 @@ export const INITIAL_PORTFOLIO_DATA: PortfolioData = {
   degree: "B.Tech",
   branch: "Computer Science and Information Technology (CSIT)",
   bio: "An enthusiastic Undergraduate Computer Science & Information Technology student at REVA University. Driven by open-source contribution, problem-solving in DSA with Java, and exploring the frontiers of Generative AI Prompt Engineering.",
-  email: "anandsirigiri2006@gmail.com",
+  email: "ugcet2502318@reva.edu.in",
   phone: "8618636854",
   githubUsername: "Anandsirigiri07",
   linkedinUrl: "https://www.linkedin.com/in/anand-sirigiri-a91910368/",
@@ -128,11 +128,12 @@ export const INITIAL_PORTFOLIO_DATA: PortfolioData = {
       id: "t-1",
       year: "Year 1",
       title: "Foundations & Open Source Exploration",
-      status: "Completed",
+      status: "Current",
       description: "Acclimatized to Computer Science fundamentals, mastered C programming structures, and initiated direct open-source contributions through GirlScript Summer of Code.",
       date: "2025 - 2026",
       items: [
-        "Enrolled in REVA University CSIT program, maintaining high academic focus.",
+        "Enrolled in REVA University CSIT program, achieving 9.0 SGPA in 1st Sem.",
+        "Currently in 1st Year, 2nd Semester.",
         "Mastered basic C constructs and algorithms during university labs.",
         "Contributed to multiple real open-source codes under GSSoC '24.",
         "Experimented with LLM system tuning in Hack2Skill Prompt War."
@@ -142,7 +143,7 @@ export const INITIAL_PORTFOLIO_DATA: PortfolioData = {
       id: "t-2",
       year: "Year 2",
       title: "Core Java & DSA Deep Dive",
-      status: "Current",
+      status: "Future",
       description: "Focusing heavily on object-oriented software engineering principles in Java, solving algorithmic problems on LeetCode, and building client-side modular packages.",
       date: "2026 - 2027",
       items: [

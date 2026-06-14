@@ -47,7 +47,7 @@ export default function RecruiterDashboard({ data, onNavigateToTab }: RecruiterD
               Undergraduate Computer Science student possessing verified active open-source contributions.
             </h3>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Anand is pursuing his B.Tech in **Computer Science and IT (CSIT)** at REVA University (2023 - 2027). He has established strong fundamental mechanics in **C Programming**, basic **Java**, and is proactively mastering intermediate **Data Structures and Algorithms** alongside active real-world open-source contributions like GSSoC.
+              Anand is currently in his **1st Year, 2nd Semester** pursuing his B.Tech in **Computer Science and IT (CSIT)** at REVA University (2023 - 2027). Having secured a **9.0 SGPA** in his 1st semester, he has established strong fundamental mechanics in **C Programming**, basic **Java**, and is proactively mastering intermediate **Data Structures and Algorithms** alongside active real-world open-source contributions like GSSoC.
             </p>
           </div>
           <div className="shrink-0 flex flex-col gap-2">
@@ -135,6 +135,12 @@ export default function RecruiterDashboard({ data, onNavigateToTab }: RecruiterD
                 </p>
                 <p className="text-xs text-slate-300">
                   Specialization: **Computer Science and Information Technology (CSIT)**
+                </p>
+                <p className="text-xs text-slate-350">
+                  Current Term: **1st Year, 2nd Semester (Current)**
+                </p>
+                <p className="text-xs text-cyan-400 font-bold">
+                  Academic Performance: **9.0 SGPA (1st Semester)**
                 </p>
                 <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-mono mt-2">
                   <MapPin className="h-3 w-3 text-red-400" /> Yelahanka, Bangalore, India
